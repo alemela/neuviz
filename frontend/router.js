@@ -117,6 +117,10 @@ var old_route = function (pathName) {
         pathName = "/index.html";
     }
 
+    if (paths[pathName]) {
+        return (path.join(ROOT, pathName));
+    }
+
     if (pathName.indexOf(API, 0) === 0) {
         var mapped = path.join(ROOT, pathName);
         var pathController = path.join(ROOT, API);
@@ -129,9 +133,6 @@ var old_route = function (pathName) {
                 return (ROOT + API + formatJSON(parameters));
             }
         }
-    }
-    if (paths[pathName]) {
-        return (path.join(ROOT, pathName));
     }
 
     return false;
