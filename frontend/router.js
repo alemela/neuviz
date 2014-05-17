@@ -29,16 +29,16 @@ var API = "/neuviz/1.0/data/";
 var years = {};
 var months = {};
 
-var paths = [
-    "/BebasNeue.otf",
-    "/geo-data/world-110m.json",
-    "/geo-data/world-country-names.tsv",
-    "/index.html",
-    "/libs/d3.v3.min.js",
-    "/libs/queue.v1.min.js",
-    "/libs/topojson.js",
-    "/libs/topojson.v1.min.js"
-]
+var paths = {
+    "/BebasNeue.otf": "/var/www/BebasNeue.otf",
+    "/geo-data/world-110m.json": "/var/www/geo-data/world-110m.json",
+    "/geo-data/world-country-names.tsv": "/var/www/geo-data/world-country-names.tsv",
+    "/index.html": "/var/www/index.html",
+    "/libs/d3.v3.min.js": "/var/www/libs/d3.v3.min.js",
+    "/libs/queue.v1.min.js": "/var/www/libs/queue.v1.min.js",
+    "/libs/topojson.js": "/var/www/libs/topojson.js",
+    "/libs/topojson.v1.min.js": "/var/www/libs/topojson.v1.min.js"
+};
 
 /**
  *
@@ -113,6 +113,10 @@ var formatJSON = function (parameters) {
 
 var old_route = function (pathName) {
 
+    if (pathName === "/") {
+        pathName = "/index.html";
+    }
+
     if (pathName.indexOf(API, 0) === 0) {
         var mapped = path.join(ROOT, pathName);
         var pathController = path.join(ROOT, API);
@@ -125,13 +129,9 @@ var old_route = function (pathName) {
                 return (ROOT + API + formatJSON(parameters));
             }
         }
-    } else if (pathName === "/") {
-        return (path.join(ROOT, "/index.html"));
     }
-    for (i in paths) {
-        if (paths[i] === pathName) {
-            return (path.join(ROOT, pathName));
-        }
+    if (paths[pathName]) {
+        return (path.join(ROOT, pathName));
     }
 
     return false;
