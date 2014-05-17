@@ -135,14 +135,14 @@ var route = function (request, response) {
 
 
     if (pathResource === undefined) {
-        utils.internalError("400 - Bad Request", request, response);
+        utils.badRequest(request, response);
         return;
     }
 
     var resource = fsReader.serve(pathResource);
 
     if (resource === "UNABLE TO READ FILE") {
-        utils.internalError("404 - Resource not found", request, response);
+        utils.notFound(request, response);
         return;
     }
 
